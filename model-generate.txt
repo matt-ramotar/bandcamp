@@ -1,0 +1,12 @@
+Artists
+npx sequelize model:generate --name Artist --attributes spotifyId:integer,name:string
+ReactionTypes
+npx sequelize model:generate --name ReactionType --attributes type:string
+Users
+npx sequelize model:generate --name User --attributes email:string,firstName:string,lastName:string,hashedPassword:string
+Albums
+npx sequelize model:generate --name Album --attributes spotifyId:integer,name:string,artistId:integer
+Songs
+npx sequelize model:generate --name Song --attributes spotifyId:integer,title:string,artistId:integer,albumId:integer,isArtistTopTrack:boolean
+UserReactions
+npx sequelize model:generate --name UserReaction --attributes 'reactionType:integer,userId:integer,songId:integer,artistId:integer,albumId:integer'
