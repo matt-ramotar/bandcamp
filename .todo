@@ -1,0 +1,20 @@
+Today:
+  ☐ Set up env
+  ☐ Set up db
+  ☐ Create User model
+  ☐ Decide on MVP
+  ☐ Aim for Wed
+  Project management:
+    ☐ GitHub vs. Jira vs. other
+    ☐ Frontend and backend in 1 repo vs 2 repos vs 2 repos in 1 organization
+
+Gitflow strategy:
+  ☐ Create feature branch
+  ☐ Make pull request
+  ☐ Review code
+
+
+  Summary:
+    ☐ MVP
+    ☐ Models
+    ☐ Seed data
