@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1 Welcome Back!
+  p Your Next Favorite Song Awaits...
+  form(action="/users" method="post" name="user-sign-in")
+    input(type="hidden" value=csrfToken)
+    label Email
+      input(type="text" name="emailAddress" placeholder="Your email...")
+    label Password
+      input(type="text" name="password" placeholder="...")
