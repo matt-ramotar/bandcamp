@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class UserReaction extends Model {
     /**
@@ -9,19 +7,20 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
+    static associate(models) {}
+  }
+  UserReaction.init(
+    {
+      reactionTypeId: DataTypes.INTEGER,
+      userId: DataTypes.INTEGER,
+      songId: DataTypes.INTEGER,
+      artistId: DataTypes.INTEGER,
+      albumId: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'UserReaction',
     }
-  };
-  UserReaction.init({
-    reactionType: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER,
-    songId: DataTypes.INTEGER,
-    artistId: DataTypes.INTEGER,
-    albumId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'UserReaction',
-  });
+  );
   return UserReaction;
 };

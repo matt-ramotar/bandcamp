@@ -1,36 +1,34 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Albums', {
+    await queryInterface.createTable('AlbumSongs', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
-      spotifyId: {
-        type: Sequelize.INTEGER
-      },
-      name: {
-        allowNull: false,
-        type: Sequelize.STRING(200)
-      },
-      artistId: {
+      albumId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: 'Artists' },
+        references: { model: 'Albums' },
+      },
+      songId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: 'Songs' },
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Albums');
-  }
+    await queryInterface.dropTable('AlbumSongs');
+  },
 };

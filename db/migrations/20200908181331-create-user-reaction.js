@@ -8,20 +8,25 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      reactionType: {
+      reactionTypeId: {
         type: Sequelize.INTEGER,
+        references: { model: 'ReactionTypes' },
       },
       userId: {
         type: Sequelize.INTEGER,
+        references: { model: 'Users' },
       },
       songId: {
         type: Sequelize.INTEGER,
+        references: { model: 'Songs' },
       },
       artistId: {
         type: Sequelize.INTEGER,
+        references: { model: 'Artists' },
       },
       albumId: {
         type: Sequelize.INTEGER,
+        references: { model: 'Albums' },
       },
       createdAt: {
         allowNull: false,

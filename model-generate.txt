@@ -10,3 +10,9 @@ Songs
 npx sequelize model:generate --name Song --attributes spotifyId:integer,title:string,artistId:integer,albumId:integer,isArtistTopTrack:boolean
 UserReactions
 npx sequelize model:generate --name UserReaction --attributes 'reactionType:integer,userId:integer,songId:integer,artistId:integer,albumId:integer'
+ArtistSong
+npx sequelize model:generate --name ArtistSong --attributes 'isArtistTopTrack:boolean,artistId:integer,songId:integer'
+ArtistAlbum
+npx sequelize model:generate --name ArtistAlbum --attributes 'artistId:integer,songId:integer'
+Album Song
+npx sequelize model:generate --name AlbumSong --attributes 'albumId:integer,songId:integer'

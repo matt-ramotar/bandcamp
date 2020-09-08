@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Artist extends Model {
     /**
@@ -10,15 +8,20 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Artist.belongsToMany(models.Album, { through: models.ArtistAlbum, foreignKey: 'artistId', otherKey: 'albumId' });
+      Artist.belongsToMany(models.User, { through: models.UserReactions, foreignKey: 'artistId', otherKey: 'userId' });
+      Artist.belongsToMany(models.Song, { through: models.ArtistSong, foreignKey: 'artistId', otherKey: 'songId' });
     }
-  };
-  Artist.init({
-    spotifyId: DataTypes.INTEGER,
-    name: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Artist',
-  });
+  }
+  Artist.init(
+    {
+      spotifyId: DataTypes.INTEGER,
+      name: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: 'Artist',
+    }
+  );
   return Artist;
 };
