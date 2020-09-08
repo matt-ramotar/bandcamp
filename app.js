@@ -3,12 +3,16 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const SpotifyWebApi = require('spotify-web-api-node');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const { SSL_OP_NO_TICKET } = require('constants');
 
 const app = express();
 
+//const seedArtists = require('./spotify/spotifySeedData');
+//console.log(seedArtists);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -37,5 +41,8 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+
 
 module.exports = app;
