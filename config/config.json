@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "bandcamp_app",
+    "password": "password",
+    "database": "bandcamp_development",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "bandcamp_app",
+    "password": "password",
+    "database": "bandcamp_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "bandcamp_app",
+    "password": "password",
+    "database": "bandcamp_production",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
