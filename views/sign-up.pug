@@ -1,0 +1,22 @@
+extends layout
+
+include utils.pug
+
+block content
+  +validationErrorSummary(errors)
+  h1 Create a Bandcamp Account
+  p Welcome to Bandcamp! Your Next Favorite Song Awaits...
+  form(action="/users" method="post" name="user-sign-up")
+    input(type="hidden" name="_csrf" value=csrfToken)
+    label First Name
+      input(type="text" name="firstName" placeholder="Your first name...")
+    label Last Name
+      input(type="text" name="lastName" placeholder="Your last name...")
+    label Email
+      input(type="email" name="email" placeholder="Your email...")
+    label Password
+      input(type="text" name="password" placeholder="Strong password...")
+    label Confirm Password
+      input(type="text" name="confirmPassword" placeholder="Same strong password as above...")
+    label Create My Account
+      input(type="submit")
