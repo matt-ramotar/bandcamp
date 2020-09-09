@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Album.belongsToMany(models.Artist, { through: models.ArtistAlbum, foreignKey: 'albumId', otherKey: 'artistId' });
-      Album.belongsToMany(models.User, { through: models.UserReactions, foreignKey: 'albumId', otherKey: 'userId' });
+      Album.belongsToMany(models.User, { through: models.UserReaction, foreignKey: 'albumId', otherKey: 'userId' });
       Album.belongsToMany(models.Song, { through: models.ArtistSong, foreignKey: 'albumId', otherKey: 'songId' });
     }
   }

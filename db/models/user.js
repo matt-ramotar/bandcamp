@@ -8,10 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.belongsToMany(models.Song, { through: models.UserReactions, foreignKey: 'userId', otherKey: 'songId' });
-      User.belongsToMany(models.Artist, { through: models.UserReactions, foreignKey: 'userId', otherKey: 'artistId' });
-      User.belongsToMany(models.Album, { through: models.UserReactions, foreignKey: 'userId', otherKey: 'albumId' });
-      User.belongsToMany(models.ReactionTypes, { through: models.UserReactions, foreignKey: 'userId', otherKey: 'reactionTypeId' });
+      User.belongsToMany(models.Song, { through: models.UserReaction, foreignKey: 'userId', otherKey: 'songId' });
+      User.belongsToMany(models.Artist, { through: models.UserReaction, foreignKey: 'userId', otherKey: 'artistId' });
+      User.belongsToMany(models.Album, { through: models.UserReaction, foreignKey: 'userId', otherKey: 'albumId' });
+      User.belongsToMany(models.ReactionType, { through: models.UserReaction, foreignKey: 'userId', otherKey: 'reactionTypeId' });
     }
   }
   User.init(
