@@ -1,10 +1,13 @@
 extends layout
 
+include utils.pug
+
 block content
+  +validationErrorSummary(errors)
   h1 Create a Bandcamp Account
   p Welcome to Bandcamp! Your Next Favorite Song Awaits...
   form(action="/users" method="post" name="user-sign-up")
-    input(type="hidden" value=csrfToken)
+    input(type="hidden" name="_csrf" value=csrfToken)
     label First Name
       input(type="text" name="firstName" placeholder="Your first name...")
     label Last Name
