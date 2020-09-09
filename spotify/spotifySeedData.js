@@ -1,5 +1,7 @@
 const SpotifyWebApi = require('spotify-web-api-node');
 
+const fs = require('fs');
+
 
 const spotifyApi = new SpotifyWebApi({
     clientId: '2bbdaed80909444e937b449b483ea544',
@@ -19,6 +21,7 @@ const spotifyApi = new SpotifyWebApi({
   
       // Save the access token so that it's used in future calls
       spotifyApi.setAccessToken(data.body['access_token']);
+    //});
   
   
   var seedArtists = [];
@@ -43,22 +46,28 @@ const spotifyApi = new SpotifyWebApi({
                 var dbArtist = {
                     "spotifyId": artist.id, 
                     name: artist.name,
-                    createdAt: new Date(),
-                    updatedAt: new Date()
+                    createdAt: "new Date()",
+                    updatedAt: "new Date()"
                 };
 
                 seedArtists.push(dbArtist);
             });
           })
           console.log(seedArtists);
+
+          fs.writeFile("./seedArtists.txt", JSON.stringify(seedArtists), err => {
+              console.log(err);
+          });
+
+
           return seedArtists;
         });
     },
     function(err) {
       console.error(err);
     })
-    
+
     });
   
 
-//module.exports = topFifty;
+
