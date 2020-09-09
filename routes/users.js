@@ -3,8 +3,7 @@ const router = express.Router();
 
 const { csrfProtection, asyncHandler, handleValidationErrors } = require('./utils');
 
-const { User: User, Artist, Reactiontype } = require('../db/models/');
-const reactiontype = require('../db/models/reactiontype');
+const { User: User, Artist, ReactionType, UserReaction } = require('../db/models');
 const bcrypt = require('bcryptjs');
 const { getUserToken, requireAuth } = require('../auth');
 
@@ -14,6 +13,8 @@ const { userCreationValidators, loginValidators } = require('./validators');
 const { validationResult } = require('express-validator')
 
 // router.use(requireAuth);
+
+
 
 
 
@@ -101,10 +102,21 @@ router.post('/', userCreationValidators, handleValidationErrors, csrfProtection,
     // user.hashedPassword = hashedPassword;
     // await user.save();
     // loginUser(req, res, user);
+
+    res.redirect('/users/artists');
+  } else {
+    const errors = validatorErrors.array().map((error) => error.msg);
+    res.render('sign-up', {
+      title: 'Register',
+      email,
+      errors,
+      csrfToken: req.csrfToken(),
+
     // const token = getUserToken(user);
     res.render('login', {
       // user: { id: user.id },
       // token
+
     });
   }));
 
@@ -117,18 +129,33 @@ router.get('/login', loginValidators, asyncHandler(async (req, res) => {
   // }
 
   }
-  
-  res.redirect('/artists');
+
+  res.redirect('/');
 }));
 
-router.get("/artists", asyncHandler(async (req, res) => {
+router.get("/artists", csrfProtection, asyncHandler(async (req, res) => {
   let artists = await Artist.findAll();
-  let reactions = await Reactiontype.findAll();
+  let reactions = await ReactionType.findAll();
+  // console.log(reactions);
   res.render("favorite-artists", {
     csrfToken: req.csrfToken(), title: "Favorite Artists",
-    artists, reactions
+    artists,
+    reactions
   });
+}));
 
+router.post("/favorite-artists", csrfProtection, asyncHandler(async (req, res) => {
+  console.log("request body", Object.keys(req.body))
+  for (const key in req.body) {
+    artistId = key
+    reactionTypeId = req.body[key]
+    console.log("Artist" + artistId, "Reaction" + reactionTypeId)
+    UserReaction.create({
+      artistId,
+      reactionTypeId
+    })
+  }
+  res.redirect("/")
 }));
 
   res.render('login');
