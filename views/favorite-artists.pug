@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  form(action ="/favorite-artist" method = "post")
+    each artist in artists
+      label(for= artist.name)
+        select(name= artist.name)
+          each reaction in reactions
+            option(value= reaction.id) #{reaction.name}
+    label Done 
+      input(type="submit")
