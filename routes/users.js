@@ -4,9 +4,10 @@ const router = express.Router();
 const { csrfProtection, asyncHandler } = require('./utils');
 const { check, validationResult } = require('express-validator');
 
+const { User: User, Artist, Reactiontype } = require('../db/models/');
+const reactiontype = require('../db/models/reactiontype');
 const bcrypt = require('bcryptjs');
 
-const { User: User } = require('../db/models/')
 
 const userValidators = [
   check('firstName')
@@ -101,6 +102,18 @@ router.post('/', userValidators, csrfProtection, asyncHandler(async (req, res) =
       csrfToken: req.csrfToken(),
     });
   }
+  
+  res.redirect('/artists');
+}));
+
+router.get("/artists", asyncHandler(async (req, res) => {
+  let artists = await Artist.findAll();
+  let reactions = await Reactiontype.findAll();
+  res.render("favorite-artists", {
+    csrfToken: req.csrfToken(), title: "Favorite Artists",
+    artists, reactions
+  });
+
 }));
 
 router.get('/login', (req, res) => {
