@@ -6,6 +6,8 @@ const { check, validationResult } = require('express-validator');
 
 const { User: User, Artist, Reactiontype } = require('../db/models/');
 const reactiontype = require('../db/models/reactiontype');
+const bcrypt = require('bcryptjs');
+
 
 const userValidators = [
   check('firstName')
@@ -63,7 +65,7 @@ router.get('/sign-up', csrfProtection, (req, res) => {
   res.render('sign-up', { csrfToken: req.csrfToken() });
 });
 
-router.post('/', userValidators, asyncHandler(async (req, res) => {
+router.post('/', userValidators, csrfProtection, asyncHandler(async (req, res) => {
   const {
     firstName,
     lastName,
@@ -71,19 +73,36 @@ router.post('/', userValidators, asyncHandler(async (req, res) => {
     password,
     confirmPassword
   } = req.body;
-  console.log(
-    firstName,
-    lastName,
-    email,
-    password,
-    confirmPassword)
-  const user = await User.create({
-    email,
-    firstName,
-    lastName,
-    hashedPassword: password
-  })
-  // await user.save();
+  const validatorErrors = validationResult(req);
+  console.log(validatorErrors)
+  if (validatorErrors.isEmpty()) {
+    console.log(
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword)
+    const hashedPassword = await bcrypt.hash(password, 10);
+    User.create({
+      email,
+      firstName,
+      lastName,
+      hashedPassword
+    })
+    // user.hashedPassword = hashedPassword;
+    // await user.save();
+    // loginUser(req, res, user);
+    res.redirect('/');
+  } else {
+    const errors = validatorErrors.array().map((error) => error.msg);
+    res.render('sign-up', {
+      title: 'Register',
+      email,
+      errors,
+      csrfToken: req.csrfToken(),
+    });
+  }
+  
   res.redirect('/artists');
 }));
 
@@ -94,10 +113,11 @@ router.get("/artists", asyncHandler(async (req, res) => {
     csrfToken: req.csrfToken(), title: "Favorite Artists",
     artists, reactions
   });
+
 }));
 
 router.get('/login', (req, res) => {
-  res.render('/login');
+  res.render('login');
 })
 
 
