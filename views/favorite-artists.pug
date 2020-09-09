@@ -2,6 +2,7 @@ extends layout
 
 block content
   form(action ="/favorite-artist" method = "post")
+    input(type="hidden" value=csrfToken)
     each artist in artists
       label(for= artist.name)
         select(name= artist.name)
