@@ -4,6 +4,7 @@ const router = express.Router();
 const { csrfProtection, asyncHandler } = require('./utils');
 const { check, validationResult } = require('express-validator');
 
+const { User: User } = require('../db/models/')
 
 const userValidators = [
   check('firstName')
@@ -16,7 +17,7 @@ const userValidators = [
     .withMessage('Please provide a value for Last Name')
     .isLength({ max: 50 })
     .withMessage('Last Name must not be more than 50 characters long'),
-  check('emailAddress')
+  check('email')
     .exists({ checkFalsy: true })
     .withMessage('Please provide a value for Email Address')
     .isLength({ max: 255 })
@@ -24,7 +25,7 @@ const userValidators = [
     .isEmail()
     .withMessage('Email Address is not a valid email')
     .custom((value) => {
-      return db.User.findOne({ where: { emailAddress: value } })
+      return User.findOne({ where: { email: value } })
         .then((user) => {
           if (user) {
             return Promise.reject('The provided Email Address is already in use by another account');
@@ -65,11 +66,23 @@ router.post('/', userValidators, asyncHandler(async (req, res) => {
   const {
     firstName,
     lastName,
-    emailAddress,
+    email,
     password,
     confirmPassword
   } = req.body;
-  console.log(firstName, lastName, email, password);
+  console.log(
+    firstName,
+    lastName,
+    email,
+    password,
+    confirmPassword)
+  const user = await User.create({
+    email,
+    firstName,
+    lastName,
+    hashedPassword: password
+  })
+  // await user.save();
   res.redirect('/');
 }));
 
