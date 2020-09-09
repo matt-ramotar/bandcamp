@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      ReactionType.belongsToMany(models.User, { through: models.UserReactions, foreignKey: 'reactionTypeId', otherKey: 'userId' });
+      ReactionType.belongsToMany(models.User, { through: models.UserReaction, foreignKey: 'reactionTypeId', otherKey: 'userId' });
     }
   }
   ReactionType.init(
