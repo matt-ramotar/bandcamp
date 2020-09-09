@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { csrfProtection, asyncHandler } = require('./utils');
+const { csrfProtection, asyncHandler, handleValidationErrors } = require('./utils');
 const { check, validationResult } = require('express-validator');
 
 const bcrypt = require('bcryptjs');
@@ -10,6 +10,7 @@ const { loginUser, logoutUser } = require('../auth');
 const { User: User } = require('../db/models/')
 
 const userValidators = [
+  handleValidationErrors, // -- added middleware
   check('firstName')
     .exists({ checkFalsy: true })
     .withMessage('Please provide a value for First Name')
