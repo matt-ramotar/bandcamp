@@ -4,6 +4,8 @@ const router = express.Router();
 const { csrfProtection, asyncHandler } = require('./utils');
 const { check, validationResult } = require('express-validator');
 
+const bcrypt = require('bcryptjs');
+
 const { User: User } = require('../db/models/')
 
 const userValidators = [
@@ -62,7 +64,7 @@ router.get('/sign-up', csrfProtection, (req, res) => {
   res.render('sign-up', { csrfToken: req.csrfToken() });
 });
 
-router.post('/', userValidators, asyncHandler(async (req, res) => {
+router.post('/', userValidators, csrfProtection, asyncHandler(async (req, res) => {
   const {
     firstName,
     lastName,
@@ -70,20 +72,35 @@ router.post('/', userValidators, asyncHandler(async (req, res) => {
     password,
     confirmPassword
   } = req.body;
-  console.log(
-    firstName,
-    lastName,
-    email,
-    password,
-    confirmPassword)
-  const user = await User.create({
-    email,
-    firstName,
-    lastName,
-    hashedPassword: password
-  })
-  // await user.save();
-  res.redirect('/');
+  const validatorErrors = validationResult(req);
+  console.log(validatorErrors)
+  if (validatorErrors.isEmpty()) {
+    console.log(
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword)
+    const hashedPassword = await bcrypt.hash(password, 10);
+    User.create({
+      email,
+      firstName,
+      lastName,
+      hashedPassword
+    })
+    // user.hashedPassword = hashedPassword;
+    // await user.save();
+    // loginUser(req, res, user);
+    res.redirect('/');
+  } else {
+    const errors = validatorErrors.array().map((error) => error.msg);
+    res.render('sign-up', {
+      title: 'Register',
+      email,
+      errors,
+      csrfToken: req.csrfToken(),
+    });
+  }
 }));
 
 router.get('/login', (req, res) => {
