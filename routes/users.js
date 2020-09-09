@@ -3,6 +3,8 @@ const router = express.Router();
 
 const { csrfProtection, asyncHandler, handleValidationErrors } = require('./utils');
 
+const { User: User, Artist, Reactiontype } = require('../db/models/');
+const reactiontype = require('../db/models/reactiontype');
 const bcrypt = require('bcryptjs');
 const { getUserToken, requireAuth } = require('../auth');
 
@@ -13,6 +15,54 @@ const { validationResult } = require('express-validator')
 
 // router.use(requireAuth);
 
+
+
+const userValidators = [
+  check('firstName')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a value for First Name')
+    .isLength({ max: 50 })
+    .withMessage('First Name must not be more than 50 characters long'),
+  check('lastName')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a value for Last Name')
+    .isLength({ max: 50 })
+    .withMessage('Last Name must not be more than 50 characters long'),
+  check('email')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a value for Email Address')
+    .isLength({ max: 255 })
+    .withMessage('Email Address must not be more than 255 characters long')
+    .isEmail()
+    .withMessage('Email Address is not a valid email')
+    .custom((value) => {
+      return User.findOne({ where: { email: value } })
+        .then((user) => {
+          if (user) {
+            return Promise.reject('The provided Email Address is already in use by another account');
+          }
+        });
+    }),
+  check('password')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a value for Password')
+    .isLength({ max: 50 })
+    .withMessage('Password must not be more than 50 characters long')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/, 'g')
+    .withMessage('Password must contain at least 1 lowercase letter, uppercase letter, number, and special character (i.e. "!@#$%^&*")'),
+  check('confirmPassword')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a value for Confirm Password')
+    .isLength({ max: 50 })
+    .withMessage('Confirm Password must not be more than 50 characters long')
+    .custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error('Confirm Password does not match Password');
+      }
+      debugger;
+      return true;
+    })
+];
 
 /* GET users listing. */
 router.get('/', (req, res, next) => {
@@ -65,6 +115,21 @@ router.get('/login', loginValidators, asyncHandler(async (req, res) => {
   //   console.log(user, token)
   //   res.redirect('/users/home', { user, token });
   // }
+
+  }
+  
+  res.redirect('/artists');
+}));
+
+router.get("/artists", asyncHandler(async (req, res) => {
+  let artists = await Artist.findAll();
+  let reactions = await Reactiontype.findAll();
+  res.render("favorite-artists", {
+    csrfToken: req.csrfToken(), title: "Favorite Artists",
+    artists, reactions
+  });
+
+}));
 
   res.render('login');
 })

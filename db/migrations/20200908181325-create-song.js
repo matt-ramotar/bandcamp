@@ -9,7 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       spotifyId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
+        unique: true,
       },
       title: {
         allowNull: false,

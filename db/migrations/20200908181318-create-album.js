@@ -6,14 +6,15 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       spotifyId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING,
+        unique: true,
       },
       name: {
         allowNull: false,
-        type: Sequelize.STRING(200)
+        type: Sequelize.STRING(200),
       },
       artistId: {
         allowNull: false,
@@ -22,15 +23,15 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Albums');
-  }
+  },
 };
