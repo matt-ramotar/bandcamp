@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       spotifyId: DataTypes.STRING,
       name: DataTypes.STRING,
-      artistId: DataTypes.INTEGER,
+    //  artistId: DataTypes.INTEGER,
     },
     {
       sequelize,
