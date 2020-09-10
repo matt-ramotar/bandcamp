@@ -1,5 +1,5 @@
 const { check, validationResult } = require('express-validator');
-const { User } = require('../db/models')
+const { User } = require('../../db/models')
 
 const loginValidators = [
   check('email')

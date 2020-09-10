@@ -1,13 +1,14 @@
 extends layout
 
 block content
-  form(action ="/users/favorite-artists" method = "post")
-    input(type="hidden" name="_csrf" value=csrfToken)
+
+  form(action ="/api/favorite-artist" method = "post")
+    input(type="hidden" value=csrfToken)
     each artist in artists
-      div
-        label #{artist.name} 
-          select(name=artist.id) 
-            each reaction in reactions 
-              option(value=reaction.id) #{reaction.type}
-    label Done 
+      label(for= artist.name)
+        select(name= artist.name)
+          each reaction in reactions
+            option(value= reaction.id) #{reaction.name}
+    label Done
       input(type="submit")
+
