@@ -6,6 +6,8 @@
 const express = require('express');
 const router = express.Router();
 
+const { restoreUser } = require('../auth');
+
 const csrfProtection = require("csurf")({ cookie: true });
 
 router.get('/', function (req, res, next) {
@@ -29,6 +31,17 @@ router.get('/sign-up', csrfProtection, (req, res) => {
 });
 
 router.get('/home', csrfProtection, (req, res) => {
+
+  if (!req.user) {
+    res.redirect("/login");
+    return;
+  }
+  res.render("home", { firstName: req.user.firstName });
+});
+
+router.get('*', (req, res) => {
+  res.render('error');
+
     if (!req.user) {
         res.redirect("/login");
         return;
@@ -38,6 +51,7 @@ router.get('/home', csrfProtection, (req, res) => {
 
 router.get('/users/survey', (req, res) => {
     res.render("favorite-artists")
+
 })
 
 module.exports = router;
