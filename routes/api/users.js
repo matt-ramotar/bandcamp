@@ -3,14 +3,17 @@ const router = express.Router();
 
 const { csrfProtection, asyncHandler, handleValidationErrors } = require('./utils');
 
+// const {Op} = require('sequelize');
 const { User, Artist, Reactiontype } = require('../../db/models');
 const reactiontype = require('../../db/models/reactiontype');
 const bcrypt = require('bcryptjs');
 const { getUserToken, requireAuth } = require('../../auth');
 
+const jwt = require('jsonwebtoken')
+const { secret, expiresIn } = require('../../config').jwtConfig;
 
 const { userCreationValidators, loginValidators } = require('./validators');
-const { validationResult, check } = require('express-validator')
+const { validationResult, check } = require('express-validator');
 
 // router.use(requireAuth);
 
@@ -73,8 +76,16 @@ router.post('/token', asyncHandler(async (req, res, next) => {
   const user = await User.findOne({
     where: { email }
   });
-  if (!user) throw new Error('Invalid username/password combination')
-  res.json({ message: 'success' });
+  if (!user || !bcrypt.compareSync(password, user.hashedPassword)) {
+    const err = new Error('Invalid username/password combination');
+    err.status = 401;
+    err.title = "Unauthorized";
+    throw err;
+  }
+  const token = await getUserToken(user);
+  res.cookie('token', token, { maxAge: expiresIn * 1000 });
+  res.json({ id: user.id, token });
+
 }))
 
 router.get('/sign-up', csrfProtection, (req, res) => {
@@ -82,8 +93,9 @@ router.get('/sign-up', csrfProtection, (req, res) => {
 });
 
 
-router.post('/', userCreationValidators, handleValidationErrors, csrfProtection,
-  asyncHandler(async (req, res) => {
+router.post('/', userCreationValidators, handleValidationErrors,  // temporarily REMOVED csrfProtection
+  asyncHandler(async (req, res, next) => {
+    // res.status(401).json({ errors: ["NOPE"] })
     const {
       firstName,
       lastName,
@@ -100,20 +112,15 @@ router.post('/', userCreationValidators, handleValidationErrors, csrfProtection,
       confirmPassword)
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    user = await User.create({
+    const user = await User.create({
       email,
       firstName,
       lastName,
       hashedPassword
     })
-    // user.hashedPassword = hashedPassword;
-    // await user.save();
-    // loginUser(req, res, user);
-    // const token = getUserToken(user);
-    res.render('login', {
-      // user: { id: user.id },
-      // token
-    });
+    const token = await getUserToken(user);
+    res.cookie('token', token, { maxAge: expiresIn * 1000 });
+    res.json({ id: user.id, token })
   }));
 
 router.get('/login', loginValidators, asyncHandler(async (req, res) => {
@@ -146,11 +153,10 @@ router.post('/login', loginValidators, asyncHandler(async (req, res) => {
 
   let errors = [];
   const validatorErrors = validationResult(req);
-  console.log(validatorErrors)
   if (validatorErrors.isEmpty()) {
     // Attempt to get the user by their email address.
     const user = await User.findOne({ where: { email: email } });
-    console.log(user)
+    // console.log(user)
 
     if (user !== null) {
       // If the user exists then compare their password

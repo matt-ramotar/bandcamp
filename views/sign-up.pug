@@ -2,11 +2,14 @@ extends layout
 
 include utils.pug
 
+append head
+  script(src="/public/js/sign-up.js" type="module" defer)
+
 block content
-  +validationErrorSummary(errors)
   h1 Create a Bandcamp Account
+  ul#errors-container
   p Welcome to Bandcamp! Your Next Favorite Song Awaits...
-  form(action="/api/users" method="post" name="user-sign-up")
+  form(name="user-sign-up" id="sign-up-form")
     input(type="hidden" name="_csrf" value=csrfToken required)
     label First Name
       input(type="text" name="firstName" placeholder="Your first name..." required)
@@ -19,4 +22,4 @@ block content
     label Confirm Password
       input(type="text" name="confirmPassword" placeholder="Same strong password as above..." required)
     label Create My Account
-      input(type="submit")
+      input(type="submit" name="submit")

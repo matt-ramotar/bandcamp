@@ -17,5 +17,12 @@ form.addEventListener('submit', async (e) => {
     }
   });
   const data = await res.json();
+  if (!res.ok) {
+    const { message } = data;
+    const errorsContainer = document.querySelector('#errors-container');
+    errorsContainer.innerHTML = "Error:" + message + ", please try again.";
+    return;
+  }
   console.log(data);
+  window.location.href = '/home';
 })

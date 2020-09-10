@@ -6,6 +6,8 @@
 const express = require('express');
 const router = express.Router();
 
+const { restoreUser } = require('../auth');
+
 const csrfProtection = require("csurf")({ cookie: true });
 
 router.get('/', function (req, res, next) {
@@ -35,5 +37,9 @@ router.get('/home', csrfProtection, (req, res) => {
   }
   res.render("home", { username: req.user.username, csrf: req.csrfToken() });
 });
+
+router.get('*', (req, res) => {
+  res.render('error');
+})
 
 module.exports = router;
