@@ -7,6 +7,7 @@ const SpotifyWebApi = require('spotify-web-api-node');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const songsRouter = require('./routes/songs');
 const { SSL_OP_NO_TICKET } = require('constants');
 
 const app = express();
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/songs', songsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
