@@ -93,7 +93,7 @@ router.post('/', userValidators, csrfProtection, asyncHandler(async (req, res) =
     // user.hashedPassword = hashedPassword;
     // await user.save();
     // loginUser(req, res, user);
-    res.redirect('/users/artists');
+    res.redirect('/artists');
   } else {
     const errors = validatorErrors.array().map((error) => error.msg);
     res.render('sign-up', {
