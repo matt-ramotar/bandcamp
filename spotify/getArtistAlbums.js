@@ -17,7 +17,7 @@ const getArtistAlbums = async() => {
            albums.push(album);
        })
    }
-
+   console.log(albums);
    return albums;
 }
 
