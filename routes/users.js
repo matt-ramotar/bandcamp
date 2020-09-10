@@ -3,15 +3,14 @@ const router = express.Router();
 
 const { csrfProtection, asyncHandler, handleValidationErrors } = require('./utils');
 
-const { User: User, Artist, Reactiontype } = require('../db/models/');
+const { User, Artist, Reactiontype } = require('../db/models/');
 const reactiontype = require('../db/models/reactiontype');
 const bcrypt = require('bcryptjs');
 const { getUserToken, requireAuth } = require('../auth');
 
-const { User } = require('../db/models/');
 
 const { userCreationValidators, loginValidators } = require('./validators');
-const { validationResult } = require('express-validator')
+const { validationResult, check } = require('express-validator')
 
 // router.use(requireAuth);
 
@@ -116,8 +115,6 @@ router.get('/login', loginValidators, asyncHandler(async (req, res) => {
   //   res.redirect('/users/home', { user, token });
   // }
 
-  }
-  
   res.redirect('/artists');
 }));
 
@@ -129,11 +126,11 @@ router.get("/artists", asyncHandler(async (req, res) => {
     artists, reactions
   });
 
+  res.render('login');
 }));
 
-  res.render('login');
-})
-)
+
+
 
 router.post('/login', loginValidators, asyncHandler(async (req, res) => {
   const { email, password } = req.body;
