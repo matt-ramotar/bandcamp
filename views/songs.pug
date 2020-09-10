@@ -9,12 +9,11 @@ block content
       th(scope='col') Artist
       th(scope='col') Album
       th(scope='col') Top Track
-      th(scope='col')
-  tbody
-    each song in songs
-      tr
-        td= song.dataValues.title
-        td= song.dataValues.artistName
-        td= song.dataValues.albumName
-        td= song.dataValues.isArtistTopTrack
-        td
+    tbody
+      each song in songs
+        tr
+          td= song.title
+          td= song.artistName
+          td= song.albumName
+          td= song.isArtistTopTrack
+          td: i.far.fa-heart
