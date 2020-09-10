@@ -68,6 +68,7 @@ const { User } = require('./db/models');
 
 const getUserToken = async (user) => {
   const token = await jwt.sign({ id: user.id, email: user.email }, secret, { expiresIn })
+  return token;
 }
 
 const getUserFromToken = async (token) => {

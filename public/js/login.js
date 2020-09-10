@@ -24,5 +24,6 @@ form.addEventListener('submit', async (e) => {
     return;
   }
   console.log(data);
+  debugger;
   window.location.href = '/home';
 })

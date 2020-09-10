@@ -72,6 +72,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/token', asyncHandler(async (req, res, next) => {
+  debugger;
   const { email, password } = req.body;
   const user = await User.findOne({
     where: { email }
@@ -83,6 +84,7 @@ router.post('/token', asyncHandler(async (req, res, next) => {
     throw err;
   }
   const token = await getUserToken(user);
+  console.log("Token:", token);
   res.cookie('token', token, { maxAge: expiresIn * 1000 });
   res.json({ id: user.id, token });
 
@@ -178,7 +180,7 @@ router.post('/login', loginValidators, asyncHandler(async (req, res) => {
 
 router.get('/home', (req, res) => {
 
-  res.render('login', { title: "You're IN!" });
+  res.render('home', { title: "You're IN!" });
 })
 
 
