@@ -23,7 +23,7 @@ const getArtistTopTracks = async() => {
         })
     }
 
-    console.log(songs.length);
+ //   console.log(songs.length);
     return songs;
 }
 

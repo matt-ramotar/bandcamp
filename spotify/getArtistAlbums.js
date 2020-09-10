@@ -14,10 +14,15 @@ const getArtistAlbums = async() => {
   
      albs.forEach(album => {
 
-           albums.push(album);
+            let found = false;
+            albums.forEach(a => {
+                if (album.id === a.id) found = true;
+            })
+
+           if (found === false) albums.push(album);
        })
    }
-   console.log(albums);
+   console.log(albums.length);
    return albums;
 }
 
