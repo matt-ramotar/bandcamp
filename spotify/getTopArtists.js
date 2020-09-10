@@ -17,11 +17,11 @@ const getTopArtists = async () => {
     });
   });
 
-  console.log(seedArtists);
-  console.log(seedArtists.length);
+  //console.log(seedArtists);
+  //console.log(seedArtists.length);
 
   fs.writeFile('./seedArtists.txt', JSON.stringify(seedArtists), err => {
-    console.log(err);
+   // console.log(err);
   });
 
   return seedArtists;
