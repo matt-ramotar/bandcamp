@@ -17,6 +17,18 @@ const { csrfProtection, asyncHandler } = require('./utils');
 //     });
 //   })
 // );
+router.get(
+  '/',
+  asyncHandler(async (req, res, next) => {
+    const songs = await Song.findAll({ include: Artist });
+    const artist = await Artist.findOne({ where: { id: await songs[0].dataValues.artistId } });
+    console.log(artist);
+    res.render('songs', {
+      title: 'Songs',
+      songs,
+    });
+  })
+);
 
 // router.get(
 //   '/:id',
