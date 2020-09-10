@@ -1,20 +1,22 @@
-Today:
-  ☐ Set up env
-  ☐ Set up db
-  ☐ Create User model
-  ☐ Decide on MVP
-  ☐ Aim for Wed
-  Project management:
-    ☐ GitHub vs. Jira vs. other
-    ☐ Frontend and backend in 1 repo vs 2 repos vs 2 repos in 1 organization
+Reactions:
+  Favorite:
+    Song: @critical
+      View:
+        - /includes/favorite
+        -
+      Public:
+        - Event listener, on click
+          - Get songId
+          - Get userId
+          - Post /reactions/favorite/{songId}
+          Routes:
+          - /users/{userId}/reactions/{reactionId}/{UserReactionId}
+            - Parse request
+              - Get userId
+              - get songId
+              - Create UserReaction with userId and songId
+            // @problem
+            - If succeessful, alert user
 
-Gitflow strategy:
-  ☐ Create feature branch
-  ☐ Make pull request
-  ☐ Review code
-
-
-  Summary:
-    ☐ MVP
-    ☐ Models
-    ☐ Seed data
+    Artist: @low
+    Album: @low
