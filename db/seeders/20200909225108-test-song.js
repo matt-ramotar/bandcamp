@@ -6,7 +6,6 @@ module.exports = {
       {
         spotifyId: 'test',
         title: 'Song Title',
-        artistId: 1,
         isArtistTopTrack: false,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -14,7 +13,6 @@ module.exports = {
       {
         spotifyId: 'test2',
         title: 'Song Title 2',
-        artistId: 3,
         isArtistTopTrack: false,
         createdAt: new Date(),
         updatedAt: new Date(),
