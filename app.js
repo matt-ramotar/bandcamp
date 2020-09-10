@@ -5,10 +5,12 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const SpotifyWebApi = require('spotify-web-api-node');
 
+// const indexRouter = require('./routes/api/index');
+// const usersRouter = require('./routes/api/users');
 
-const indexRouter = require('./routes/api/index');
 const usersRouter = require('./routes/api/users');
 const songsRouter = require('./routes/api/songs');
+const pagesRouter = require('./routes/pages');
 
 const { SSL_OP_NO_TICKET } = require('constants');
 
@@ -26,12 +28,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use("/public", express.static('public'));
-
-app.use('/', indexRouter);
-app.use('/api', usersRouter);
-app.use('/api', songsRouter);
-
+app.use('/public', express.static('public'));
+app.use('/api/users', usersRouter);
+app.use('/api/songs', songsRouter);
+app.use('/', pagesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

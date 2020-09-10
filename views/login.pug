@@ -3,7 +3,7 @@ extends layout
 block content
   h1 Welcome Back!
   p Your Next Favorite Song Awaits...
-  form(action="/login" method="post" name="user-sign-in")
+  form(action="/users/login" method="post" name="user-sign-in")
     input(type="hidden" value=csrfToken)
     label Email
       input(type="text" name="email" placeholder="Your email...")
