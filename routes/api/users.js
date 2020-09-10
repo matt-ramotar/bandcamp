@@ -3,19 +3,16 @@ const router = express.Router();
 
 const { csrfProtection, asyncHandler, handleValidationErrors } = require('./utils');
 
-
-const { User, Artist, Reactiontype, UserReaction } = require('../db/models/');
-
+const { User, Artist, Reactiontype } = require('../../db/models');
+const reactiontype = require('../../db/models/reactiontype');
 const bcrypt = require('bcryptjs');
-const { getUserToken, requireAuth } = require('../auth');
+const { getUserToken, requireAuth } = require('../../auth');
 
 
 const { userCreationValidators, loginValidators } = require('./validators');
 const { validationResult, check } = require('express-validator')
 
 // router.use(requireAuth);
-
-
 
 
 
@@ -103,21 +100,10 @@ router.post('/', userCreationValidators, handleValidationErrors, csrfProtection,
     // user.hashedPassword = hashedPassword;
     // await user.save();
     // loginUser(req, res, user);
-
-    res.redirect('/users/artists');
-  } else {
-    const errors = validatorErrors.array().map((error) => error.msg);
-    res.render('sign-up', {
-      title: 'Register',
-      email,
-      errors,
-      csrfToken: req.csrfToken(),
-
     // const token = getUserToken(user);
     res.render('login', {
       // user: { id: user.id },
       // token
-
     });
   }));
 
@@ -129,24 +115,18 @@ router.get('/login', loginValidators, asyncHandler(async (req, res) => {
   //   res.redirect('/users/home', { user, token });
   // }
 
-
   res.redirect('/artists');
-
 }));
 
-router.get("/artists", csrfProtection, asyncHandler(async (req, res) => {
+router.get("/artists", asyncHandler(async (req, res) => {
   let artists = await Artist.findAll();
-  let reactions = await ReactionType.findAll();
-  // console.log(reactions);
+  let reactions = await Reactiontype.findAll();
   res.render("favorite-artists", {
     csrfToken: req.csrfToken(), title: "Favorite Artists",
-    artists,
-    reactions
+    artists, reactions
   });
-}));
 
   res.render('login');
-
 }));
 
 
