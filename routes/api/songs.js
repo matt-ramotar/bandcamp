@@ -9,7 +9,8 @@ router.get(
   '/',
   asyncHandler(async (req, res, next) => {
     const songs = await Song.findAll({ include: Artist });
-    console.log(await songs);
+    const artist = await Artist.findOne({ where: { id: await songs[0].dataValues.artistId } });
+    console.log(artist);
     res.render('songs', {
       title: 'Songs',
       songs,
