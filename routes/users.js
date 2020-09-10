@@ -107,31 +107,6 @@ router.post('/', userValidators, csrfProtection, asyncHandler(async (req, res) =
   res.redirect('/');
 }));
 
-router.get("/artists", csrfProtection, asyncHandler(async (req, res) => {
-  let artists = await Artist.findAll();
-  let reactions = await ReactionType.findAll();
-  // console.log(reactions);
-  res.render("favorite-artists", {
-    csrfToken: req.csrfToken(), title: "Favorite Artists",
-    artists,
-    reactions
-  });
-}));
-
-router.post("/favorite-artists", csrfProtection, asyncHandler(async (req, res) => {
-  console.log("request body", Object.keys(req.body))
-  for (const key in req.body) {
-    artistId = key
-    reactionTypeId = req.body[key]
-    console.log("Artist" + artistId, "Reaction" + reactionTypeId)
-    UserReaction.create({
-      artistId,
-      reactionTypeId
-    })
-  }
-  res.redirect("/")
-}));
-
 router.get('/login', (req, res) => {
   res.render('login');
 })
