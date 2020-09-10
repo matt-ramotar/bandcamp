@@ -7,16 +7,16 @@ block content
   h1 Create a Bandcamp Account
   p Welcome to Bandcamp! Your Next Favorite Song Awaits...
   form(action="/api/users" method="post" name="user-sign-up")
-    input(type="hidden" name="_csrf" value=csrfToken)
+    input(type="hidden" name="_csrf" value=csrfToken required)
     label First Name
-      input(type="text" name="firstName" placeholder="Your first name...")
+      input(type="text" name="firstName" placeholder="Your first name..." required)
     label Last Name
-      input(type="text" name="lastName" placeholder="Your last name...")
+      input(type="text" name="lastName" placeholder="Your last name..." required)
     label Email
-      input(type="email" name="email" placeholder="Your email...")
+      input(type="email" name="email" placeholder="Your email..." required)
     label Password
-      input(type="text" name="password" placeholder="Strong password...")
+      input(type="text" name="password" placeholder="Strong password..." required)
     label Confirm Password
-      input(type="text" name="confirmPassword" placeholder="Same strong password as above...")
+      input(type="text" name="confirmPassword" placeholder="Same strong password as above..." required)
     label Create My Account
       input(type="submit")

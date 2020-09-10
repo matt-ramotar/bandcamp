@@ -68,6 +68,15 @@ router.get('/', (req, res, next) => {
   res.send('respond with a resource');
 });
 
+router.post('/token', asyncHandler(async (req, res, next) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({
+    where: { email }
+  });
+  if (!user) throw new Error('Invalid username/password combination')
+  res.json({ message: 'success' });
+}))
+
 router.get('/sign-up', csrfProtection, (req, res) => {
   res.render('sign-up', { csrfToken: req.csrfToken() });
 });

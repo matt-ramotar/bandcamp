@@ -1,13 +1,16 @@
 extends layout
 
+append head
+  script(src="/public/js/login.js" type="module" defer)
+
 block content
   h1 Welcome Back!
   p Your Next Favorite Song Awaits...
-  form(action="/users/login" method="post" name="user-sign-in")
-    input(type="hidden" value=csrfToken)
+  form(name="user-sign-in" id="login-form")
+    input(type="hidden" value=csrfToken required)
     label Email
-      input(type="text" name="email" placeholder="Your email...")
+      input(type="text" name="email" placeholder="Your email..." required)
     label Password
-      input(type="text" name="password" placeholder="...")
+      input(type="text" name="password" placeholder="..." required)
     label Login
       input(type="submit" name="submit")
