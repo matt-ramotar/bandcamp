@@ -136,20 +136,6 @@ router.get('/login', loginValidators, asyncHandler(async (req, res) => {
   res.redirect('/artists');
 }));
 
-router.get("/artists", asyncHandler(async (req, res) => {
-  let artists = await Artist.findAll();
-  let reactions = await Reactiontype.findAll();
-  res.render("favorite-artists", {
-    csrfToken: req.csrfToken(), title: "Favorite Artists",
-    artists, reactions
-  });
-
-  res.render('login');
-}));
-
-
-
-
 router.post('/login', loginValidators, asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 

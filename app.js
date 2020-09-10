@@ -10,6 +10,7 @@ const SpotifyWebApi = require('spotify-web-api-node');
 const usersRouter = require('./routes/api/users');
 const songsRouter = require('./routes/api/songs');
 const pagesRouter = require('./routes/pages');
+const artistsRouter = require('./routes/api/artists');
 
 const { SSL_OP_NO_TICKET } = require('constants');
 const { environment } = require('./config');
@@ -44,6 +45,7 @@ app.use(async (req, res, next) => {
 app.use('/public', express.static('public'));
 app.use('/api/users', usersRouter);
 app.use('/api/songs', songsRouter);
+app.use('/api/artists', artistsRouter);
 app.use('/', pagesRouter);
 
 // catch 404 and forward to error handler
