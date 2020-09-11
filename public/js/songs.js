@@ -1,3 +1,11 @@
+/*
+// FEATURES:
+- hide columns: id, spotifyId, createdAt, updatedAt, isArtistTopTrack
+- anchor to Artist page
+- anchor to Album page
+- playback via spotifyId
+*/
+
 const favoritesForm = document.querySelector('#songs-form');
 
 const getSongs = async () => {
@@ -52,12 +60,17 @@ const getSongId = parent => {
   return parent.nodeName === 'TR' ? parent.firstChild.innerText : parent.parentElement.firstChild.innerText;
 };
 
+const updateHeartIcon = () => {};
+
 createTableOfSongs();
 
 favoritesForm.addEventListener('click', async e => {
   e.preventDefault();
-
+  // TODO: add Column isFavorited to db
+  // - boolean
   if (e.target.classList.contains('heartIcon')) {
+    console.log(e.target);
+    const heartIcon = e.target.nodeName === 'svg' ? e.target : e.target.firstElementChild;
     const songId = getSongId(e.target.parentElement);
     console.log(songId);
 
@@ -75,13 +88,11 @@ favoritesForm.addEventListener('click', async e => {
         headers: { 'Content-Type': 'application/json' },
       });
 
-      updateHeartIcon(e.target);
+      heartIcon.classList.remove('far');
+      heartIcon.classList.add('fas');
     } catch (err) {
       console.log(err);
     }
-
-    const data = await res.json();
-
     // const icon = document.querySelector(`#icon-${userReaction.Songs[0].id}`);
 
     // icon.classList.remove('far');
