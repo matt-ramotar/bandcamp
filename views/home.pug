@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  
   body
-    h1 Welcome Home, #{firstName}!
-    p Your username is #{user.email}
+      h1(class="welcome") Welcome Home, #{firstName}!
+      include favorite-artist-home.pug

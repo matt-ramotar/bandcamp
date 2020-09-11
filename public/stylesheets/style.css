@@ -224,8 +224,14 @@ a:hover {
 
 .search-results  {
   margin: 10px;
+
 }
 
 .title {
   margin: 10px
+}
+
+.welcome{
+  text-align: center;
+  color:white;
 }
