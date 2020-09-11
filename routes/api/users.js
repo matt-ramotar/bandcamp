@@ -67,28 +67,6 @@ router.get('/', (req, res, next) => {
   res.send('respond with a resource');
 });
 
-<<<<<<< HEAD
-router.post(
-  '/token',
-  asyncHandler(async (req, res, next) => {
-    debugger;
-    const { email, password } = req.body;
-    const user = await User.findOne({
-      where: { email },
-    });
-    if (!user || !bcrypt.compareSync(password, user.hashedPassword)) {
-      const err = new Error('Invalid username/password combination');
-      err.status = 401;
-      err.title = 'Unauthorized';
-      throw err;
-    }
-    const token = await getUserToken(user);
-    console.log('Token:', token);
-    res.cookie('token', token, { maxAge: expiresIn * 1000 });
-    res.json({ id: user.id, token });
-  })
-);
-=======
 router.post('/token', asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({
@@ -106,7 +84,6 @@ router.post('/token', asyncHandler(async (req, res, next) => {
   res.json({ id: user.id, token });
 
 }))
->>>>>>> bd4631b781980714fb0de3fba7234decc5c0ab41
 
 router.get('/sign-up', csrfProtection, (req, res) => {
   res.render('sign-up', { csrfToken: req.csrfToken() });
