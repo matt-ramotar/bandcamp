@@ -6,6 +6,20 @@ const { Song, Album, Artist, UserReaction, User } = db;
 
 const { csrfProtection, asyncHandler } = require('./utils');
 
+const findASong = require("../../search/findASong.js");
+
+// router.get(
+//   '/',
+//   asyncHandler(async (req, res, next) => {
+//     const songs = await Song.findAll({ include: Artist });
+//     const artist = await Artist.findOne({ where: { id: await songs[0].dataValues.artistId } });
+//     console.log(artist);
+//     res.render('songs', {
+//       title: 'Songs',
+//       songs,
+//     });
+//   })
+// );
 router.get(
   '/',
   asyncHandler(async (req, res, next) => {
@@ -59,6 +73,11 @@ router.post('/reactions/:reaction/new', async (req, res, next) => {
 //   });
 //   console.log(await favoriteSongs);
 // });
+router.post('/', asyncHandler(async (req, res) => {
+  const { search } = req.body;
+  const song = await findASong(search);
+  res.json({ song });
+}))
 
 // router.get(
 //   '/:id',
