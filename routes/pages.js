@@ -11,47 +11,47 @@ const { restoreUser } = require('../auth');
 const csrfProtection = require("csurf")({ cookie: true });
 
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'It\'s Band Time!' });
+    res.render('index', { title: 'It\'s Band Time!' });
 });
 
 router.get('/login', (req, res) => {
-  if (req.user) {
-    res.redirect('/home');
-    return;
-  }
-  res.render('login');
+    if (req.user) {
+        res.redirect('/home');
+        return;
+    }
+    res.render('login');
 });
 
 router.get('/sign-up', (req, res) => {
-  if (req.user) {
-    res.redirect("/home");
-    return;
-  }
-  res.render("sign-up");
+    if (req.user) {
+        res.redirect("/home");
+        return;
+    }
+    res.render("sign-up");
 });
 
 router.get('/home', (req, res) => {
 
-  if (!req.user) {
-    res.redirect("/login");
-    return;
-  }
-  res.render("home", { firstName: req.user.firstName, user: req.user });
+    if (!req.user) {
+        res.redirect("/login");
+        return;
+    }
+    res.render("home", { firstName: req.user.firstName, user: req.user });
 });
-router.get('/users/survey', (req, res) => {
-  res.render("favorite-artists")
+router.get('/users/survey', csrfProtection, (req, res) => {
+    res.render("favorite-artists", { csrfToken: req.csrfToken() })
 
 })
 
-router.get('*', (req, res) => {
-  res.render('error');
+// router.get('*', (req, res) => {
+//     res.render('error');
 
-  if (!req.user) {
-    res.redirect("/login");
-    return;
-  }
-  res.render("home", { username: req.user.username });
-});
+//     if (!req.user) {
+//         res.redirect("/login");
+//         return;
+//     }
+//     res.render("home", { username: req.user.username });
+// });
 
 
 module.exports = router;
