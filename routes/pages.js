@@ -38,12 +38,27 @@ router.get('/home', (req, res) => {
     }
     res.render("home", { firstName: req.user.firstName, user: req.user });
 });
+
+router.get('/navbar', (req, res) => {
+
+  res.render("navbar");
+});
+
 router.get('/users/survey', csrfProtection, (req, res) => {
     res.render("favorite-artists", { csrfToken: req.csrfToken() })
 
 })
 
 // router.get('*', (req, res) => {
+
+//   res.render('error');
+
+//   if (!req.user) {
+//     res.redirect("/login");
+//     return;
+//   }
+//   res.render("home", { username: req.user.username });
+
 //     res.render('error');
 
 //     if (!req.user) {
@@ -51,6 +66,7 @@ router.get('/users/survey', csrfProtection, (req, res) => {
 //         return;
 //     }
 //     res.render("home", { username: req.user.username });
+
 // });
 
 
