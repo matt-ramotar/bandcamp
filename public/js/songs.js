@@ -25,7 +25,6 @@ const generateTableHead = async (table, songs) => {
   let thead = table.createTHead();
   let row = thead.insertRow();
   const keys = Object.keys(songs[0]);
-  //
   // TODO: set cols as hidden
 
   console.log(keys);
