@@ -38,20 +38,24 @@ router.get('/home', (req, res) => {
   }
   res.render("home", { firstName: req.user.firstName, user: req.user });
 });
+router.get('/navbar', (req, res) => {
+
+  res.render("navbar");
+});
 router.get('/users/survey', (req, res) => {
   res.render("favorite-artists")
 
 })
 
-router.get('*', (req, res) => {
-  res.render('error');
+// router.get('*', (req, res) => {
+//   res.render('error');
 
-  if (!req.user) {
-    res.redirect("/login");
-    return;
-  }
-  res.render("home", { username: req.user.username });
-});
+//   if (!req.user) {
+//     res.redirect("/login");
+//     return;
+//   }
+//   res.render("home", { username: req.user.username });
+// });
 
 
 module.exports = router;

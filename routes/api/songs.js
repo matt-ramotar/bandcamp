@@ -5,6 +5,8 @@ const { Song, Album, Artist } = require('../../db/models');
 
 const { csrfProtection, asyncHandler } = require('./utils');
 
+const findASong = require("../../search/findASong.js");
+
 // router.get(
 //   '/',
 //   asyncHandler(async (req, res, next) => {
@@ -29,6 +31,12 @@ router.get(
     });
   })
 );
+
+router.post('/', asyncHandler(async(req, res) => {
+  const {search} = req.body;
+  const song = await findASong(search);
+  res.json({song}); 
+}))
 
 // router.get(
 //   '/:id',

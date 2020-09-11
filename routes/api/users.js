@@ -61,7 +61,6 @@ const userValidators = [
       if (value !== req.body.password) {
         throw new Error('Confirm Password does not match Password');
       }
-      debugger;
       return true;
     })
 ];
@@ -72,7 +71,6 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/token', asyncHandler(async (req, res, next) => {
-  debugger;
   const { email, password } = req.body;
   const user = await User.findOne({
     where: { email }

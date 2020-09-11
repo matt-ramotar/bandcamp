@@ -3,7 +3,25 @@ html
   head
     block head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='../public/stylesheets/style.css')
 
   body
+    append head
+      script(src="/public/js/search.js" type="module" defer)
+    nav.navbar
+      .container-fluid
+        //- // Nav Header
+        .navbar-header 
+          .navbar-sub-1
+            a.navbar-user(href='/sign-up') Sign Up
+              span.fa.fa-home
+            a.navbar-user(href='/login') Log In
+              span.fa.fa-home
+          .a(href='/' id='site-name') songcamp
+          label 
+            input(id="search" type="search" name="search" placeholder="find a song..." required)
     block content
+    .search-results
+    
+
+    
