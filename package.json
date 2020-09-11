@@ -27,10 +27,10 @@
     "pug": "2.0.0-beta11",
     "sequelize": "^6.3.5",
     "sequelize-cli": "^6.2.0",
-    "spotify-web-api-node": "^4.0.0"
+    "spotify-web-api-node": "^4.0.0",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
-    "dotenv-cli": "^3.2.0",
-    "morgan": "^1.10.0"
+    "dotenv-cli": "^3.2.0"
   }
 }
