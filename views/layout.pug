@@ -3,7 +3,32 @@ html
   head
     block head
     title= title
+<<<<<<< HEAD
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css")
     link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" defer)
+=======
+    link(rel='stylesheet', href='../public/stylesheets/style.css')
+>>>>>>> bd4631b781980714fb0de3fba7234decc5c0ab41
 
   body
+    append head
+      script(src="/public/js/search.js" type="module" defer)
+    nav.navbar
+      .container-fluid
+        //- // Nav Header
+        .navbar-header 
+          .navbar-sub-1
+            a.navbar-user(href='/sign-up') Sign Up
+              span.fa.fa-home
+            a.navbar-user(href='/login') Log In
+              span.fa.fa-home
+          .a(href='/' id='site-name') songcamp
+          label 
+            input(id="search" type="search" name="search" placeholder="find a song..." required)
     block content
+    .search-results
+    
+
+    

@@ -1,0 +1,19 @@
+extends layout
+
+append head
+  script(src="/public/js/search.js" type="module" defer)
+
+block nav
+  nav.navbar
+    .container-fluid
+      //- // Nav Header
+      .navbar-header 
+        .navbar-sub-1
+          a.navbar-user(href='/sign-up') Sign Up
+            span.fa.fa-home
+          a.navbar-user(href='/login') Log In
+            span.fa.fa-home
+        .a(href='/' id='site-name') songcamp
+        label 
+          input(id="search" type="search" name="search" placeholder="find a song..." required)
+      

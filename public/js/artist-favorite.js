@@ -38,11 +38,10 @@ artistForm.addEventListener("submit", async e => {
     const formData = new FormData(artistForm);
     let favoriteArtistArray = [];
     favoriteArtistArray = formData.getAll("selection");
-    const _csrf = formData.get("_csrf")
-    console.log(favoriteArtistArray);
-
+    const _csrf = formData.get('_csrf');
+    // console.log(favoriteArtistArray);
     const body = { favoriteArtistArray, _csrf };
-
+    // console.log(body)
     const res = await fetch('/api/artists', {
         method: "POST",
         body: JSON.stringify(body),
@@ -50,6 +49,6 @@ artistForm.addEventListener("submit", async e => {
             "Content-Type": "application/json"
         }
     })
-
+    window.location.href = "/home"
 
 })
