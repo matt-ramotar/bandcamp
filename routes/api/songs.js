@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const { Song, Album, Artist } = require('../../db/models');
+const db = require('../../db/models');
+const { Song, Album, Artist, UserReaction, User } = db;
 
 const { csrfProtection, asyncHandler } = require('./utils');
 
@@ -9,14 +10,55 @@ router.get(
   '/',
   asyncHandler(async (req, res, next) => {
     const songs = await Song.findAll({ include: Artist });
-    const artist = await Artist.findOne({ where: { id: await songs[0].dataValues.artistId } });
-    console.log(artist);
-    res.render('songs', {
-      title: 'Songs',
-      songs,
-    });
+    res.json({ songs });
   })
 );
+
+router.post('/reactions/:reaction/new', async (req, res, next) => {
+  const { songId } = req.body;
+  const reactionId = req.params.reaction;
+
+  // TODO: userId = req.user.id
+  const userId = 5;
+
+  const newUserReaction = await UserReaction.create({
+    reactionTypeId: 3,
+    userId,
+    songId,
+  });
+
+  console.log(await newUserReaction);
+
+  const userReaction = await UserReaction.findByPk(newUserReaction.id, {
+    include: [
+      { model: User, attributes: ['email'] },
+      { model: Song, attributes: ['spotifyId', 'title'] },
+    ],
+  });
+  res.json({ userReaction });
+});
+
+// router.post('/:userId/songs', async (req, res, next) => {
+//   const userId = req.params.userId;
+//   const
+// });
+// router.get('/:userId/songs', async (req, res, next) => {
+//   const userId = req.params.userId;
+
+//   const favoriteSongs = await UserReaction.findAll({
+//     where: {
+//       [Op.and]: [
+//         { id: userId },
+//         {
+//           songId: {
+//             [Op.gte]: 1,
+//           },
+//         },
+//       ],
+//     },
+//   });
+//   console.log(await favoriteSongs);
+// });
 
 // router.get(
 //   '/:id',

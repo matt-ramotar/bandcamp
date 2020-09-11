@@ -1,19 +1,26 @@
 extends layout.pug
 
+append head
+  script(src="../public/js/songs.js" type="module" defer)
+
 block content
   h1.title.is-1 #{title}
-  table.table
-   thead
-    tr
-      th(scope='col') Title
-      th(scope='col') Artist
-      th(scope='col') Album
-      th(scope='col') Top Track
-    tbody
-      each song in songs
-        tr
-          td= song.title
-          td= song.artistName
-          td= song.albumName
-          td= song.isArtistTopTrack
-          td: i.far.fa-heart
+  form#songs-form
+    table#songs-table.table
+  //- thead
+  //-       tr
+  //-         th(scope='col')
+  //-         th(scope='col') Title
+  //-         th(scope='col') Artist
+  //-         th(scope='col') Album
+  //-         th(scope='col') Top Track
+  //-         th(scope='col')
+  //-       tbody
+  //-           each song in songs
+  //-             tr
+  //-               td: input(type="hidden" name="id" value=song.id)
+  //-               td= song.title
+  //-               td= song.artistName
+  //-               td= song.albumName
+  //-               td= song.isArtistTopTrack
+  //-               td: button(type="submit"): i(id=`icon-${song.id}` class="far fa-heart")
