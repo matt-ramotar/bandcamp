@@ -3,21 +3,19 @@ const router = express.Router();
 
 const { csrfProtection, asyncHandler, handleValidationErrors } = require('./utils');
 
-// const {Op} = require('sequelize');
-const { User, Artist, Reactiontype } = require('../../db/models');
+const { Op } = require('sequelize');
+const { User, Artist, Reactiontype, UserReaction } = require('../../db/models');
 const reactiontype = require('../../db/models/reactiontype');
 const bcrypt = require('bcryptjs');
 const { getUserToken, requireAuth } = require('../../auth');
 
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 const { secret, expiresIn } = require('../../config').jwtConfig;
 
 const { userCreationValidators, loginValidators } = require('./validators');
 const { validationResult, check } = require('express-validator');
 
 // router.use(requireAuth);
-
-
 
 const userValidators = [
   check('firstName')
@@ -37,13 +35,12 @@ const userValidators = [
     .withMessage('Email Address must not be more than 255 characters long')
     .isEmail()
     .withMessage('Email Address is not a valid email')
-    .custom((value) => {
-      return User.findOne({ where: { email: value } })
-        .then((user) => {
-          if (user) {
-            return Promise.reject('The provided Email Address is already in use by another account');
-          }
-        });
+    .custom(value => {
+      return User.findOne({ where: { email: value } }).then(user => {
+        if (user) {
+          return Promise.reject('The provided Email Address is already in use by another account');
+        }
+      });
     }),
   check('password')
     .exists({ checkFalsy: true })
@@ -62,7 +59,7 @@ const userValidators = [
         throw new Error('Confirm Password does not match Password');
       }
       return true;
-    })
+    }),
 ];
 
 /* GET users listing. */
@@ -92,81 +89,76 @@ router.get('/sign-up', csrfProtection, (req, res) => {
   res.render('sign-up', { csrfToken: req.csrfToken() });
 });
 
-
-router.post('/', userCreationValidators, handleValidationErrors,  // temporarily REMOVED csrfProtection
+router.post(
+  '/',
+  userCreationValidators,
+  handleValidationErrors, // temporarily REMOVED csrfProtection
   asyncHandler(async (req, res, next) => {
     // res.status(401).json({ errors: ["NOPE"] })
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      confirmPassword
-    } = req.body;
+    const { firstName, lastName, email, password, confirmPassword } = req.body;
 
-    console.log(
-      firstName,
-      lastName,
-      email,
-      password,
-      confirmPassword)
+    console.log(firstName, lastName, email, password, confirmPassword);
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({
       email,
       firstName,
       lastName,
-      hashedPassword
-    })
+      hashedPassword,
+    });
     const token = await getUserToken(user);
     res.cookie('token', token, { maxAge: expiresIn * 1000 });
-    res.json({ id: user.id, token })
-  }));
+    res.json({ id: user.id, token });
+  })
+);
 
-router.get('/login', loginValidators, asyncHandler(async (req, res) => {
+router.get(
+  '/login',
+  loginValidators,
+  asyncHandler(async (req, res) => {
+    // if (req.user) {
+    //   const { user, token } = req;
+    //   console.log(user, token)
+    //   res.redirect('/users/home', { user, token });
+    // }
 
-  // if (req.user) {
-  //   const { user, token } = req;
-  //   console.log(user, token)
-  //   res.redirect('/users/home', { user, token });
-  // }
+    res.redirect('/artists');
+  })
+);
 
-  res.redirect('/artists');
-}));
+router.post(
+  '/login',
+  loginValidators,
+  asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
 
-router.post('/login', loginValidators, asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+    let errors = [];
+    const validatorErrors = validationResult(req);
+    if (validatorErrors.isEmpty()) {
+      // Attempt to get the user by their email address.
+      const user = await User.findOne({ where: { email: email } });
+      // console.log(user)
 
-  let errors = [];
-  const validatorErrors = validationResult(req);
-  if (validatorErrors.isEmpty()) {
-    // Attempt to get the user by their email address.
-    const user = await User.findOne({ where: { email: email } });
-    // console.log(user)
+      if (user !== null) {
+        // If the user exists then compare their password
+        // to the provided password.
+        const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
 
-    if (user !== null) {
-      // If the user exists then compare their password
-      // to the provided password.
-      const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
-
-      if (passwordMatch) {
-        // loginUser(req, res, user);
-        res.render('home', { firstName: user.firstName });
-
+        if (passwordMatch) {
+          // loginUser(req, res, user);
+          res.render('home', { firstName: user.firstName });
+        }
       }
+      errors.push('Login failed for the provided email address and password');
+    } else {
+      errors = validatorErrors.array().map(error => error.msg);
+      console.log('Error: password incorrect');
     }
-    errors.push('Login failed for the provided email address and password');
-  } else {
-    errors = validatorErrors.array().map((error) => error.msg);
-    console.log("Error: password incorrect")
-  }
-}))
+  })
+);
 
 router.get('/home', (req, res) => {
-
   res.render('home', { title: "You're IN!" });
-})
-
-
+});
 
 module.exports = router;
