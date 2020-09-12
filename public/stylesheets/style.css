@@ -252,3 +252,9 @@ a:hover {
   margin-bottom: 20px;
   margin-left: 50px;
 }
+
+#site-name {
+  color: white;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+}

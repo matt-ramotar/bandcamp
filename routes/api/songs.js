@@ -30,7 +30,6 @@ router.get(
 
 router.post('/favorites/new', async (req, res, next) => {
   const { songId } = req.body;
-  const reactionId = req.params.reaction;
 
   const userId = req.user.id
   // const userId = 1;

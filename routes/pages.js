@@ -22,10 +22,6 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/sign-up', (req, res) => {
-  if (req.user) {
-    res.redirect("/home");
-    return;
-  }
   res.render("sign-up");
 });
 
