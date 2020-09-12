@@ -60,7 +60,7 @@ const getSongId = parent => {
   return parent.nodeName === 'TR' ? parent.firstChild.innerText : parent.parentElement.firstChild.innerText;
 };
 
-const updateHeartIcon = () => {};
+const updateHeartIcon = () => { };
 
 createTableOfSongs();
 
@@ -82,7 +82,7 @@ favoritesForm.addEventListener('click', async e => {
     const reactionId = 3;
 
     try {
-      await fetch(`/api/songs/reactions/${3}/new`, {
+      await fetch(`/api/songs/reactions/${1}/new`, {
         method: 'post',
         body: JSON.stringify(body),
         headers: { 'Content-Type': 'application/json' },
