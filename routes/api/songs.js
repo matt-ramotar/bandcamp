@@ -33,10 +33,10 @@ router.post('/reactions/:reaction/new', async (req, res, next) => {
   const reactionId = req.params.reaction;
 
   // TODO: userId = req.user.id
-  const userId = 5;
+  const userId = 1;
 
   const newUserReaction = await UserReaction.create({
-    reactionTypeId: 3,
+    reactionTypeId: 1,
     userId,
     songId,
   });
