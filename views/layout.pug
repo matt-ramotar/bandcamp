@@ -8,6 +8,7 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" defer)
     link(rel='stylesheet', href='../public/stylesheets/style.css')
+    script(src="../public/js/favorite-songs.js" defer)
 
   body
     append head
@@ -21,8 +22,10 @@ html
               span.fa.fa-home
             a.navbar-user(href='/login') Log In
               span.fa.fa-home
+            button(id="favorite-songs-button" class="button navbar-user") Favorite Songs
           .a(href='/' id='site-name') songcamp
           label
             input(id="search" type="search" name="search" placeholder="find a song..." required)
     block content
-    .search-results
+      .search-results
+    #favorite-songs

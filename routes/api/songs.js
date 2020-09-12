@@ -32,8 +32,8 @@ router.post('/reactions/:reaction/new', async (req, res, next) => {
   const { songId } = req.body;
   const reactionId = req.params.reaction;
 
-  // TODO: userId = req.user.id
-  const userId = 1;
+  const userId = req.user.id
+  // const userId = 1;
 
   const newUserReaction = await UserReaction.create({
     reactionTypeId: 1,
@@ -41,7 +41,7 @@ router.post('/reactions/:reaction/new', async (req, res, next) => {
     songId,
   });
 
-  console.log(await newUserReaction);
+  // console.log(await newUserReaction);
 
   const userReaction = await UserReaction.findByPk(newUserReaction.id, {
     include: [
