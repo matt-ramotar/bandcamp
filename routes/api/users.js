@@ -4,7 +4,7 @@ const router = express.Router();
 const { csrfProtection, asyncHandler, handleValidationErrors } = require('./utils');
 
 const { Op } = require('sequelize');
-const { User, Artist, Reactiontype, UserReaction } = require('../../db/models');
+const { User, Artist, Reactiontype, UserReaction, Song } = require('../../db/models');
 const reactiontype = require('../../db/models/reactiontype');
 const bcrypt = require('bcryptjs');
 const { getUserToken, requireAuth } = require('../../auth');
@@ -116,11 +116,10 @@ router.get(
   '/login',
   loginValidators,
   asyncHandler(async (req, res) => {
-    // if (req.user) {
-    //   const { user, token } = req;
-    //   console.log(user, token)
-    //   res.redirect('/users/home', { user, token });
-    // }
+    if (!req.user) {
+      const token = await getUserToken(user);
+      res.cookie('token', token, { maxAge: expiresIn * 1000 });
+    }
 
     res.redirect('/artists');
   })
@@ -157,8 +156,20 @@ router.post(
   })
 );
 
-router.get('/home', (req, res) => {
-  res.render('home', { title: "You're IN!" });
-});
+router.get('/get', asyncHandler(async (req, res) => {
+  const id = req.user.id;
+  res.json(id);
+}))
+
+router.get('/:userId/favorites', asyncHandler(async (req, res) => {
+  const userId = req.params.userId;
+  const user = await User.findByPk(userId, { include: Song });
+  console.log(user.Songs);
+  let songTitles = user.Songs.map(song => {
+    return song.dataValues.title;
+  })
+  console.log(songTitles)
+  res.json({ songTitles });
+}))
 
 module.exports = router;

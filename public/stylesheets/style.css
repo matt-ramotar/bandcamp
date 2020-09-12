@@ -235,3 +235,26 @@ a:hover {
   text-align: center;
   color:white;
 }
+
+#search-results {
+  color: #f857a6;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.search-results-result {
+  margin-left: 50px;
+}
+
+#favorite-songs {
+  color: #f857a6;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  margin-left: 50px;
+}
+
+#site-name {
+  color: white;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+}
