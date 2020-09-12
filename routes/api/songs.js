@@ -28,7 +28,7 @@ router.get(
   })
 );
 
-router.post('/reactions/:reaction/new', async (req, res, next) => {
+router.post('/favorites/new', async (req, res, next) => {
   const { songId } = req.body;
   const reactionId = req.params.reaction;
 

@@ -1,3 +1,51 @@
+
+
+
+
+document.querySelector('.search-results').addEventListener('click', async e => {
+    const target = e.target;
+    console.log(target.nodeName)
+    if (target.nodeName === "svg") {
+        const parent = target.parentElement;
+        const songId = parent.id;
+        console.log(songId)
+        try {
+            await fetch(`/api/songs/favorites/new`, {
+                method: 'POST',
+                body: JSON.stringify({ songId }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            target.classList.remove('far');
+            target.classList.add('fas');
+        } catch (e) {
+
+        }
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const getFavoriteArtists = async () => {
     const res = await fetch("/api/artists/favorite-artists");
     const data = await res.json();
