@@ -116,11 +116,10 @@ router.get(
   '/login',
   loginValidators,
   asyncHandler(async (req, res) => {
-    // if (req.user) {
-    //   const { user, token } = req;
-    //   console.log(user, token)
-    //   res.redirect('/users/home', { user, token });
-    // }
+    if (!req.user) {
+      const token = await getUserToken(user);
+      res.cookie('token', token, { maxAge: expiresIn * 1000 });
+    }
 
     res.redirect('/artists');
   })
