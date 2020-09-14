@@ -34,8 +34,11 @@ document.querySelector('.search-results').addEventListener('click', async e => {
             const previewUrl = resp.previewUrl;
             const image = resp.image;
 
-            document.querySelector('audio').setAttribute("src", previewUrl);
-            document.querySelector('img').setAttribute("src", image);
+            document.querySelector('.audio_player').classList.remove('hidden');
+            document.querySelector('.art').classList.remove('hidden');
+
+            document.querySelector('.audio_player').setAttribute("src", previewUrl);
+            document.querySelector('.art').setAttribute("src", image);
 
 
         } catch (e) {
