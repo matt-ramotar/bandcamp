@@ -4,6 +4,8 @@ const router = express.Router();
 const db = require('../../db/models');
 const { Song, Album, Artist, UserReaction, User } = db;
 
+const s = require('../../spotify/getSpotifyApiInstance');
+
 const { csrfProtection, asyncHandler } = require('./utils');
 
 const findASong = require("../../search/findASong.js");
@@ -48,8 +50,33 @@ router.post('/favorites/new', async (req, res, next) => {
       { model: Song, attributes: ['spotifyId', 'title'] },
     ],
   });
+
   res.json({ userReaction });
 });
+
+router.post('/favorites/play', async(req, res, next) => {
+  const { songId } = req.body;
+  const spotifyInstance = await s();
+
+  const spotifyId = (await Song.findByPk(songId)).spotifyId;
+
+  //const songId = await song.id;
+
+  //const artist = await song.Artists[0];
+
+ // console.log(artist);
+
+
+  const track = await spotifyInstance.getTrack(spotifyId);
+  const previewUrl = track.body.preview_url;
+
+  const image = track.body.album.images[0].url;
+  console.log(image)
+
+
+  const response = previewUrl
+  res.json({previewUrl, image});
+})
 
 // router.post('/:userId/songs', async (req, res, next) => {
 //   const userId = req.params.userId;

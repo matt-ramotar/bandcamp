@@ -3,7 +3,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
 })
 
 
-
 document.querySelector('.search-results').addEventListener('click', async e => {
     const target = e.target;
     console.log(target.nodeName)
@@ -21,8 +20,26 @@ document.querySelector('.search-results').addEventListener('click', async e => {
             })
             target.classList.remove('far');
             target.classList.add('fas');
-        } catch (e) {
 
+
+            const response = await fetch('/api/songs/favorites/play', {
+                method: 'POST',
+                body: JSON.stringify({songId}),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+
+            const resp = await response.json();
+            const previewUrl = resp.previewUrl;
+            const image = resp.image;
+
+            document.querySelector('audio').setAttribute("src", previewUrl);
+            document.querySelector('img').setAttribute("src", image);
+
+
+        } catch (e) {
+            console.log(e)
         }
     }
 })
