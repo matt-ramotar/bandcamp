@@ -8,3 +8,22 @@
     text-align: center;
     color: white;
 }
+
+.favorite-artist-headline{
+    text-align: center;
+}
+
+.artistList{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: center;
+    padding: 10px;
+}
+
+#favoriteArtistForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 5px solid white;
+}
+
