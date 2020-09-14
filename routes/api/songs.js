@@ -65,14 +65,17 @@ router.post('/favorites/play', async(req, res, next) => {
   //const artist = await song.Artists[0];
 
  // console.log(artist);
-  console.log(spotifyId);
+
 
   const track = await spotifyInstance.getTrack(spotifyId);
   const previewUrl = track.body.preview_url;
 
+  const image = track.body.album.images[0].url;
+  console.log(image)
+
 
   const response = previewUrl
-  res.json({previewUrl});
+  res.json({previewUrl, image});
 })
 
 // router.post('/:userId/songs', async (req, res, next) => {

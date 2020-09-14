@@ -27,10 +27,13 @@ document.querySelector('.search-results').addEventListener('click', async e => {
                     "Content-Type": "application/json"
                 }
             })
-            const previewUrl = await response.json();
 
-            document.querySelector('audio').setAttribute("src", previewUrl.previewUrl);
-          //  document.querySelector('img').setAttribute("src", artUrl.artUrl);
+            const resp = await response.json();
+            const previewUrl = resp.previewUrl;
+            const image = resp.image;
+
+            document.querySelector('audio').setAttribute("src", previewUrl);
+            document.querySelector('img').setAttribute("src", image);
 
 
         } catch (e) {
