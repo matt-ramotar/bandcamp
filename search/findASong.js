@@ -12,9 +12,9 @@ let findASong = async (searchString) => {
                 }
             }
     });
-   // console.log(JSON.stringify(songs, null, 2));
+    console.log(JSON.stringify(songs, null, 2));
 
-   
+
     songs.forEach(song =>{
         hits.push(song);
     })
@@ -42,12 +42,11 @@ let findASong = async (searchString) => {
     albums.forEach(album =>{
         hits.push(album);
     })
-  
+
     console.log(hits);
     return hits;
 }
 
-//console.log(findASong());
-//findASong();
+
 
 module.exports = findASong;
