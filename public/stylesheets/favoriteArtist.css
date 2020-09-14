@@ -1,6 +1,6 @@
 .favoriteArtists{
     text-align: center;
-    background-color:blue;
+    background-color:#bbbbbb;
     color: white;
 }
 
@@ -26,4 +26,3 @@
     align-items: center;
     border: 5px solid white;
 }
-
