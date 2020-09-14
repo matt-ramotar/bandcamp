@@ -6,21 +6,30 @@ append head
   script(src="/public/js/sign-up.js" type="module" defer)
 
 block content
-  h1 Create a Bandcamp Account
+  h1.band-camp-account-creation-headline Create a Bandcamp Account
   ul#errors-container
-  p Welcome to Bandcamp! Your Next Favorite Song Awaits...
-  form(name="user-sign-up" id="sign-up-form")
-    input(type="hidden" name="_csrf" value=csrfToken required)
-    label First Name
-      input(type="text" name="firstName" placeholder="Your first name..." required)
-    label Last Name
-      input(type="text" name="lastName" placeholder="Your last name..." required)
-    label Email
-      input(type="email" name="email" placeholder="Your email..." required)
-    label Password
-      input(type="text" name="password" placeholder="Strong password..." required)
-    label Confirm Password
-      input(type="text" name="confirmPassword" placeholder="Same strong password as above..." required)
-    label Create My Account
-      input(type="submit" name="submit")
+  p.bandcamp-welcome Welcome to Bandcamp! Your Next Favorite Song Awaits...
+  .container
+    .signUpContainer
+      p Tell Us About Yourself
+      form(name="user-sign-up" id="sign-up-form")
+        input(type="hidden" name="_csrf" value=csrfToken required)
+        label First Name
+          input(type="text" name="firstName" placeholder="Your first name..." required)
+        label Last Name
+          input(type="text" name="lastName" placeholder="Your last name..." required)
+        label Email
+          input(type="email" name="email" placeholder="Your email..." required)
+        label Password
+          input(type="text" name="password" placeholder="Strong password..." required)
+        label Confirm Password
+          input(type="text" name="confirmPassword" placeholder="Same strong password as above..." required)
+        label Create My Account
+        input(type="submit" name="submit")
+      .already-member
+        p Already Part of the Group?
+        button(id="memberButton") Click Here
   .search-results
+
+    
+  

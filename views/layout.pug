@@ -18,11 +18,11 @@ html
         //- // Nav Header
         .navbar-header
           .navbar-sub-1
-            a.navbar-user(href='/sign-up') Sign Up
-              span.fa.fa-home
-            a.navbar-user(href='/login') Log In
-              span.fa.fa-home
-            button(id="favorite-songs-button" class="button navbar-user") Favorite Songs
+            a.navbar-user(href='/sign-up' id="sign-up-link" class="hidden") Sign Up
+              //- span.fa.fa-home
+            a.navbar-user(href='/login' id="user-login-link" class="hidden") Log In
+              //- span.fa.fa-home
+            button(id="favorite-songs-button" class="button navbar-user hidden") Favorite Songs
           a(href='/home' id='site-name') songcamp
           label
             input(id="search" type="search" name="search" placeholder="find a song..." required)

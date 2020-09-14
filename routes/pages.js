@@ -9,8 +9,8 @@ const { restoreUser } = require('../auth');
 
 const csrfProtection = require('csurf')({ cookie: true });
 
-router.get('/', function (req, res, next) {
-  res.render('layout', { title: "It's Band Time!" });
+router.get('/', (req, res, next) => {
+  res.redirect('/sign-up');
 });
 
 router.get('/login', (req, res) => {

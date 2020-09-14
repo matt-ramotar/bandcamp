@@ -2,9 +2,11 @@ extends layout
 
 append head
   script(src="/js/artist-favorite.js" type="module" defer)
+  link(rel='stylesheet', href='/stylesheets/favoriteArtist.css')
 block content
-  h1 Pick Your Favorite Artists
-  form#favoriteArtistForm
-    input(type="hidden" name="_csrf" value=csrfToken)
-    ul.artistList
-    input(type="submit")
+  .favorite-artist-container
+    h1.favorite-artist-headline Pick Your Favorite Artists
+    form#favoriteArtistForm
+      input(type="hidden" name="_csrf" value=csrfToken)
+      .artistList
+      input(type="submit" class="favorite-artist-button")

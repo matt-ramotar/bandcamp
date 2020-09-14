@@ -1,4 +1,6 @@
-
+window.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById("favorite-songs-button").classList.remove("hidden");
+})
 
 
 
