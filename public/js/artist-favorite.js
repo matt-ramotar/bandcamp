@@ -8,23 +8,23 @@ const getArtists = async () => {
 
 const createArtistLi = (artist) => {
     const artistName = artist.name
-    const li = document.createElement("li");
-    li.innerHTML = `${artistName}`
+    const span = document.createElement("span");
+    span.innerHTML = `${artistName}`
     const checkbox = document.createElement('input')
     checkbox.type = "checkbox"
     checkbox.setAttribute("name", "selection")
     checkbox.setAttribute("value", `${artist.name}`)
-    li.appendChild(checkbox);
-    return li
+    span.appendChild(checkbox);
+    return span
 
 }
 
 const populateArtistList = async () => {
     const { artists } = await getArtists();
     for (let artist of artists) {
-        const li = createArtistLi(artist)
+        const span = createArtistLi(artist)
         const artistList = document.querySelector(".artistList");
-        artistList.appendChild(li)
+        artistList.appendChild(span)
 
     }
 }

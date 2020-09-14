@@ -59,6 +59,69 @@ body {
   border-radius: 0;
   background: linear-gradient(to right, #ff5858, #f857a6);
 }
+.container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.signUpContainer{
+  display: flex;
+  border: 5px solid white;
+  flex-direction: column;
+  align-items: center;
+  width: 600px;
+  background-image: url("../assets/guitarist.jpg");
+  background-size: 600px 300px;
+}
+
+#sign-up-form{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  align-items: center;
+}
+
+.band-camp-account-creation-headline{
+  text-align: center;
+  
+}
+
+.bandcamp-welcome{
+  text-align: center;
+}
+
+.already-member{
+  display: flex;
+  padding-bottom: 10px;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#site-name{
+  text-align: center;
+}
+
+#login-form{
+  display: flex;
+  border: 5px solid white;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+  height: 350px;
+  justify-content: center;
+  margin:10px;
+  background-image: url("../assets/guitarist.jpg");
+  background-size: 500px 350px;
+  
+}
+
+.user-name-password{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 10px;
+}
 /*
 .navbar .nav li > a, .navbar .navbar-brand {
   max-height: 50px;
@@ -257,4 +320,19 @@ a:hover {
   color: white;
   text-decoration: none;
   font-family: 'Roboto', sans-serif;
+  justify-self: center;
+}
+
+.hidden{
+  display: none;
+}
+
+.welcome-back{
+  text-align: center;
+}
+
+.log-in-form-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

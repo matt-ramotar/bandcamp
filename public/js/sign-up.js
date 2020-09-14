@@ -1,4 +1,5 @@
 const form = document.querySelector('#sign-up-form');
+const memberButton = document.querySelector('#memberButton');
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -33,4 +34,9 @@ form.addEventListener('submit', async (e) => {
   }
   console.log(data);
   window.location.href = '/users/survey';
+})
+
+memberButton.addEventListener('click', async () => {
+  console.log("click")
+  window.location.href = '/login';
 })
